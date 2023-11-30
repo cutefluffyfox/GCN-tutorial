@@ -10,13 +10,18 @@ class Linear(CachedInputLayer):
     def forward(self, batch: np.array) -> np.array:
         return (np.matmul(batch, self.W.T).T + self.b).T
 
+    # @non_batchable_method(const_idx=2)
     def backward(self, grad: np.array, x: np.array, lr: float) -> np.array:
-        # calculate input error and weights error
-        inp_err = np.dot(grad, self.W)
-        w_err = np.dot(x.T, grad)
+        # calculate W and b gradients
+        w_grad = np.matmul(grad.T, x)
+        b_grad = np.sum(grad, axis=0, keepdims=True)
 
-        # update values from gradient
-        self.W -= lr * w_err
-        self.b -= lr * grad
+        self.W -= w_grad * lr
+        self.b -= b_grad.T * lr
 
-        return inp_err
+        # calculate output gradient
+        return np.matmul(self.W.T, grad.T).T
+
+    def update(self, w_grad, b_grad, lr):
+        self.W -= w_grad * lr
+        self.b -= b_grad * lr
