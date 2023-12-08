@@ -7,11 +7,13 @@ def non_batchable_method(const_idx: int = None):
     def decorator(func):
         def wrapper(*args, **kwargs):
             obj, *args = args
-            for items in zip(*(args[:const_idx] + args[const_idx+1:] if const_idx else args)):
+            for items in zip(*(args[:const_idx] + args[const_idx + 1:] if const_idx else args)):
                 if const_idx:
                     items = items[:const_idx] + (args[const_idx],) + items[const_idx + 1:]
                 func(obj, *items, **kwargs)
+
         return wrapper
+
     return decorator
 
 
