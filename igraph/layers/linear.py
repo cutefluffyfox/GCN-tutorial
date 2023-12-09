@@ -16,7 +16,7 @@ class Linear(CachedInputLayer):
     # @non_batchable_method(const_idx=2)
     def backward(self, grad: np.array, x: np.array, lr: float) -> np.array:
         # TODO: remove this line from here
-        x = x[0][1]
+        x = x[1]
 
         # calculate W and b gradients
         w_grad = np.matmul(grad.T, x)
