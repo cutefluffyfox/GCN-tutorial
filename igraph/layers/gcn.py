@@ -22,6 +22,7 @@ class GCNLayer(CachedCustomLayer):
         batch = batch[1]
 
         features = (adj_matrix @ batch).T  # for calculating gradients (D, bs)
+        # TODO: add activation function as a parameter
         return features, adj_matrix, np.tanh((self.W @ features).T)  # (bs, h)
 
     def backward(self, grad: np.ndarray, cached: tuple[np.ndarray, np.ndarray, np.ndarray],
