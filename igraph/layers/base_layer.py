@@ -72,9 +72,9 @@ class CachedInputLayer(BaseLayer, ABC):
     backward calculation.
     """
 
-    def __call__(self, x) -> np.array:
-        self.cache = x
-        return self.forward(x)
+    def __call__(self, *args, **kwargs) -> np.array:
+        self.cache = args
+        return self.forward(*args, **kwargs)
 
 
 class CachedOutputLayer(BaseLayer, ABC):
@@ -83,9 +83,9 @@ class CachedOutputLayer(BaseLayer, ABC):
     backward calculation.
     """
 
-    def __call__(self, x) -> np.array:
-        self.cache = self.forward(x)
-        return x
+    def __call__(self, *args, **kwargs) -> np.array:
+        self.cache = self.forward(*args, **kwargs)
+        return args
 
 
 class CachedCustomLayer(BaseLayer, ABC):
@@ -95,5 +95,5 @@ class CachedCustomLayer(BaseLayer, ABC):
     that will save all required data in `self.cache` variable
     """
 
-    def __call__(self, x) -> np.array:
+    def __call__(self, *args, **kwargs) -> np.array:
         raise NotImplementedError('Please define your custom __call__ function')
