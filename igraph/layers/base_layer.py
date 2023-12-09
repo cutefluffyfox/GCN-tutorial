@@ -72,9 +72,9 @@ class CachedInputLayer(BaseLayer, ABC):
     backward calculation.
     """
 
-    def __call__(self, *args, **kwargs) -> np.array:
-        self.cache = args
-        return self.forward(*args, **kwargs)
+    def __call__(self, x, **kwargs) -> np.array:
+        self.cache = x
+        return self.forward(x, **kwargs)
 
 
 class CachedOutputLayer(BaseLayer, ABC):
@@ -85,7 +85,7 @@ class CachedOutputLayer(BaseLayer, ABC):
 
     def __call__(self, *args, **kwargs) -> np.array:
         self.cache = self.forward(*args, **kwargs)
-        return args
+        return self.cache
 
 
 class CachedCustomLayer(BaseLayer, ABC):
