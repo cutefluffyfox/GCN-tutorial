@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def matrix_factorization(adjacency_matrix: np.array) -> np.array:
+def matrix_factorization(adjacency_matrix: np.ndarray) -> np.ndarray:
     """
     Get the normalized form of adjacency_matrix for message passing.
     The formula for resulting matrix is:
@@ -9,6 +9,7 @@ def matrix_factorization(adjacency_matrix: np.array) -> np.array:
     where A_mod = adjacency_matrix + I,
     d_i and d_j are degress of connected nodes.
     """
+
     A_mod = adjacency_matrix + np.eye(adjacency_matrix.shape[0])  # add self connections
 
     D = np.zeros_like(A_mod)
