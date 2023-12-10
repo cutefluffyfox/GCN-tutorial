@@ -33,6 +33,7 @@ class GCNLayer(CachedCustomLayer):
         # calculate w_grad
         tanh_grad = 1 - np.asarray(output) ** 2  # (bs, out_dim)
         feature_grad = np.multiply(grad, tanh_grad)  # (bs, out_dim) *element_wise* (bs, out_dim)
+
         w_grad = np.asarray(feature_grad.T @ features.T) / batch_size  # (out_dim, bs)*(bs, D) -> (out_dim, D)
 
         self.W -= w_grad * lr
