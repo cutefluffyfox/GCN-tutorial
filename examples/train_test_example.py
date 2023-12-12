@@ -42,7 +42,7 @@ def train(model,
 
     for epoch in range(epochs):
 
-        output = model((A_hat, X))
+        output = model(X, adj_matrix=A_hat)
 
         loss = loss_fn(y, output)
 
@@ -79,7 +79,7 @@ def test(model,
     :return: loss value and accuracy
     """
 
-    output = model((A_hat, X))
+    output = model(X, adj_matrix=A_hat)
 
     loss = loss_fn(y, output)
     acc = accuracy(y, output)

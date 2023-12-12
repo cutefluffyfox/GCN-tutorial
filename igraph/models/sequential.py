@@ -1,5 +1,6 @@
 import numpy as np
-from igraph.layers.base_layer import BaseLayer
+from igraph.layers import BaseLayer
+from igraph.layers import GCNLayer
 
 
 class Sequential:
@@ -7,14 +8,17 @@ class Sequential:
         self.layers = layers
         self.lr = lr
 
-    def forward(self, batch: np.array) -> np.array:
+    def forward(self, batch: np.ndarray, adj_matrix: np.ndarray = None) -> np.ndarray:
         for layer in self.layers:
-            batch = layer(batch)
+            if isinstance(layer, GCNLayer):
+                batch = layer(adj_matrix, batch)
+            else:
+                batch = layer(batch)
         return batch
 
-    def backward(self, grad: np.array):
+    def backward(self, grad: np.ndarray):
         for layer in self.layers[::-1]:
             grad = layer.backward(grad, self.lr) if layer.cache is None else layer.backward(grad, layer.cache, self.lr)
 
-    def __call__(self, batch) -> np.array:
-        return self.forward(batch)
+    def __call__(self, batch: np.ndarray, adj_matrix: np.ndarray = None) -> np.ndarray:
+        return self.forward(batch, adj_matrix)
