@@ -4,3 +4,4 @@ from igraph.layers.linear import Linear
 from igraph.layers.softmax import SoftMax
 from igraph.layers.relu import ReLU
 from igraph.layers.gcn import GCNLayer
+from igraph.layers.tanh import Tanh

@@ -2,7 +2,7 @@ import numpy as np
 import networkx as nx
 
 from igraph.models import Sequential
-from igraph.layers import Linear, GCNLayer, SoftMax
+from igraph.layers import Linear, GCNLayer, SoftMax, Tanh
 from igraph.losses import cross_entropy_loss
 from igraph.preprocessing import matrix_factorization
 
@@ -123,8 +123,11 @@ def run_example():
     # Create the model
     model = Sequential(lr=0.01, layers=[
         GCNLayer(n_features=A.shape[0], n_outputs=16),
+        Tanh(),
         GCNLayer(n_features=16, n_outputs=16),
+        Tanh(),
         GCNLayer(n_features=16, n_outputs=2),
+        Tanh(),
         Linear(in_dim=2, out_dim=y.shape[1]),
         SoftMax()
     ])
