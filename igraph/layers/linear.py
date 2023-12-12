@@ -9,15 +9,10 @@ class Linear(CachedInputLayer):
         self.b = np.zeros((out_dim, 1))
 
     def forward(self, batch: np.array) -> np.array:
-        # TODO: replace this double transpose with a better solution
-        batch = batch[1].T
-        return (np.asarray(self.W @ batch) + self.b).T
+        return (np.asarray(self.W @ batch.T) + self.b).T
 
     # @non_batchable_method(const_idx=2)
     def backward(self, grad: np.array, x: np.array, lr: float) -> np.array:
-        # TODO: remove this line from here
-        x = x[1]
-
         # calculate W and b gradients
         w_grad = np.matmul(grad.T, x)
         b_grad = np.sum(grad, axis=0, keepdims=True)
