@@ -19,7 +19,7 @@ class GCNLayer(CachedCustomLayer):
         """
 
         features = (adj_matrix @ batch).T  # for calculating gradients (D, bs)
-        # TODO: add activation function as a parameter
+
         return features, adj_matrix, (self.W @ features).T  # (bs, h)
 
     def backward(self, grad: np.ndarray, cached: tuple[np.ndarray, np.ndarray, np.ndarray],
